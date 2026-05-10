@@ -1,26 +1,146 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --bg-color: #FFFFFF;
+  --text-primary: #1a1a1a;
+  --text-secondary: #8c8c8c;
+  --text-placeholder: #b3b3b3;
+  --divider: #e6e6e6;
+  --hover-bg: #f5f5f5;
+  --input-bg: #fafafa;
+  --accent: #1a1a1a;
+  --accent-bg: #f0f0f0;
+  --danger: #ff4d4f;
+  --danger-bg: #fff1f0;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg-color: #141414;
+    --text-primary: #f0f0f0;
+    --text-secondary: #8c8c8c;
+    --text-placeholder: #595959;
+    --divider: #333333;
+    --hover-bg: #1f1f1f;
+    --input-bg: #1a1a1a;
+    --accent: #ffffff;
+    --accent-bg: #262626;
+    --danger: #ff4d4f;
+    --danger-bg: rgba(255, 77, 79, 0.15);
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-color);
+  font-family: 'Space Mono', monospace;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+::selection {
+  background: var(--hover-bg);
+}
+
+h1, h2, h3 {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+/* Minimalist Inputs */
+.notion-input {
+  background: transparent;
+  border: none;
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: var(--text-primary);
+  padding: 8px 0;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.notion-input::placeholder {
+  color: var(--text-placeholder);
+}
+
+.notion-input:focus {
+  outline: none;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--divider);
+  background: var(--input-bg);
+  border-radius: 8px; /* Rounded corners */
+  padding: 0 12px;
+  transition: border-color 0.2s;
+}
+
+.input-wrapper:focus-within {
+  border-color: var(--accent);
+}
+
+/* Minimalist Buttons */
+.notion-btn {
+  background: transparent;
+  border: 1px solid var(--divider);
+  border-radius: 8px; /* Rounded corners */
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 10px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.notion-btn:hover:not(:disabled) {
+  background: var(--hover-bg);
+  color: var(--text-primary);
+  border-color: var(--text-primary);
+}
+
+.notion-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.notion-btn-primary {
+  color: var(--bg-color);
+  background: var(--text-primary);
+  border: 1px solid var(--text-primary);
+}
+
+.notion-btn-primary:hover:not(:disabled) {
+  background: var(--text-secondary);
+  border-color: var(--text-secondary);
+  color: var(--bg-color);
+}
+
+.notion-btn-danger {
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+
+.notion-btn-danger:hover:not(:disabled) {
+  background: var(--danger);
+  color: white;
+}
+
+/* Dividers */
+hr {
+  border: none;
+  border-top: 1px dashed var(--divider);
+  margin: 2rem 0;
 }

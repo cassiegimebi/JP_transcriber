@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 日本語 Transcriber (Japanese Learning App)
+
+This is a Next.js application designed to instantly transcribe, translate, and analyze Japanese audio for language learners. It uses the blazing-fast Groq API for both Whisper (audio) and Llama 3 (analysis).
 
 ## Getting Started
 
-First, run the development server:
+Because this connects to a powerful AI model, you will need a free API key from Groq.
 
+### 1. Get your Free API Key
+1. Go to [https://console.groq.com/keys](https://console.groq.com/keys)
+2. Create an account (it's completely free).
+3. Click "Create API Key" and copy the string it gives you.
+
+### 2. Configure the App
+1. In this folder (`japanese-transcriber`), create a new file called `.env.local`
+2. Paste your API key into the file exactly like this:
+   ```
+   GROQ_API_KEY=gsk_your_key_here...
+   ```
+3. Save the file.
+
+### 3. Run the App
+Open your terminal, ensure you are in this folder, and run:
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open [http://localhost:3000](http://localhost:3000) in your browser. You can now use the record button or upload audio files to test it out!
