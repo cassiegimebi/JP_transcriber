@@ -240,18 +240,18 @@ ${transData.text}`;
         <button 
           onClick={isRecording ? stopRecording : startRecording}
           disabled={isLoading || !isKeySaved}
-          className={`notion-btn w-full sm:w-auto min-w-[160px] ${isRecording ? 'notion-btn-danger' : ''}`}
+          className={`notion-btn ${isRecording ? 'notion-btn-danger' : ''}`}
         >
           {isRecording ? "STOP RECORDING" : "START RECORDING"}
         </button>
 
-        <label className={`notion-btn w-full sm:w-auto min-w-[160px] cursor-pointer ${(isLoading || !isKeySaved) ? 'opacity-50 pointer-events-none' : ''}`}>
+        <label className={`notion-btn cursor-pointer ${(isLoading || !isKeySaved) ? 'opacity-50 pointer-events-none' : ''}`}>
           UPLOAD AUDIO
           <input type="file" accept="audio/*" className="hidden" onChange={handleFileUpload} disabled={isLoading || !isKeySaved} />
         </label>
 
         {analysis && (
-          <button onClick={downloadTranscript} className="notion-btn w-full sm:w-auto min-w-[160px]">
+          <button onClick={downloadTranscript} className="notion-btn">
             EXPORT NOTES
           </button>
         )}
