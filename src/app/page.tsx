@@ -132,7 +132,7 @@ ${transData.text}`;
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'llama3-70b-8192',
+          model: 'llama-3.3-70b-versatile',
           messages: [{ role: 'user', content: prompt }],
           temperature: 0.1,
         }),
@@ -153,7 +153,7 @@ ${transData.text}`;
           const cleaned = resultText.replace(/```json/g, '').replace(/```/g, '').trim();
           parsedResult = JSON.parse(cleaned);
         } catch (parseError: any) {
-          throw new Error(`Failed to parse AI response as JSON: ${parseError.message}. Response was: ${resultText.slice(0, 100)}...`);
+          throw new Error(`Failed to parse AI response as JSON. Response was: ${resultText.slice(0, 100)}...`);
         }
       }
 
@@ -274,22 +274,22 @@ ${transData.text}`;
         )}
       </div>
 
-      {/* Status & Error Message */}
-      {status && (
-        <div className={`flex items-center justify-center gap-3 text-[12px] mb-8 uppercase tracking-widest ${status.startsWith('Error') ? 'text-red-500' : 'text-[var(--text-secondary)]'}`}>
+      {/* Status Message (Only show if error or not loading) */}
+      {status && !isLoading && (
+        <div className={`flex items-center justify-center gap-3 text-[12px] mb-8 uppercase tracking-widest ${status.startsWith('Error') ? 'text-red-500 max-w-2xl text-center normal-case' : 'text-[var(--text-secondary)]'}`}>
           {status}
         </div>
       )}
 
       {/* Loading Animation (Moving Wheel) */}
       {isLoading && (
-        <div className="flex flex-col items-center justify-center gap-6 mb-12 mt-4 py-8 w-full border border-dashed border-[var(--divider)] rounded-xl">
+        <div className="flex flex-col items-center justify-center gap-6 mb-12 mt-4 py-10 w-full border border-[var(--divider)] bg-[var(--input-bg)] rounded-xl">
           <div className="relative w-16 h-16">
             <div className="absolute top-0 left-0 w-full h-full border-4 border-[var(--divider)] rounded-full"></div>
             <div className="absolute top-0 left-0 w-full h-full border-4 border-[var(--text-primary)] border-t-transparent rounded-full animate-spin"></div>
           </div>
           <div className="text-[12px] text-[var(--text-secondary)] uppercase tracking-widest font-bold">
-            Processing...
+            {status}
           </div>
         </div>
       )}
