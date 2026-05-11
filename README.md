@@ -1,18 +1,29 @@
-# 日本語 Transcriber (Japanese Learning App)
+# 日本語 Transcriber (JP Transcriber)
 
-This is a Next.js application designed to instantly transcribe, translate, and analyze Japanese audio for language learners. It uses the Groq API for both Whisper (audio) and Llama 3 (analysis).
+A minimalist, high-performance web application designed to instantly transcribe spoken Japanese audio, translate it to English, and automatically extract vocabulary and summary data. 
 
-## Getting Started
+Built for language learners, this app runs entirely in your browser and connects directly to the blazing-fast **Groq API** (using Whisper for audio and Llama 3 for text analysis).
 
-Because this connects to an AI model, you will need a free API key from Groq.
+## 🚀 Live Demo
+You can use the live version hosted on GitHub Pages:
+[https://cassiegimebi.github.io/JP_transcriber/](https://cassiegimebi.github.io/JP_transcriber/)
 
-### 1. Get your Free API Key
-1. Go to [https://console.groq.com/keys](https://console.groq.com/keys)
-2. Create an account (it's completely free).
-3. Click "Create API Key" and copy the string it gives you.
+## ✨ Features
+- **Instant Transcription**: Record or upload Japanese audio and get text in seconds.
+- **Furigana Generation**: Automatically adds reading guides above kanji.
+- **AI Analysis**: Generates an English translation and a Japanese summary.
+- **Vocabulary Extraction**: Creates a list of key words with readings and meanings.
+- **Clean Export**: Download your notes as a structured Markdown file.
 
-### 2. Configure the App
-Paste your API key.
+## 🔑 How to Use (Bring Your Own Key)
+To keep this app free and fast, it uses a "Bring Your Own Key" model. Your key is stored safely in your browser's local storage and never sent to any server except Groq.
 
-### 3. Run the App
+1. Get a free API key from the [Groq Console](https://console.groq.com/keys).
+2. Open the app and paste your key into the **API Configuration** box.
+3. Click **Save** and start transcribing!
 
+## 🛠 Tech Stack
+- **Framework**: Next.js (Static Export)
+- **Styling**: Tailwind CSS
+- **Font**: Comfortaa
+- **APIs**: Groq (Whisper-large-v3-turbo & Llama-3-70b)

@@ -110,6 +110,7 @@ I am going to provide you with a raw Japanese transcription.
 I want you to analyze it and provide a JSON response with the following format EXACTLY:
 {
   "translation": "An English translation of the text",
+  "summary_ja": "A brief summary of the text in Japanese",
   "furigana_text": "The original Japanese text, but with kanji formatted as [Kanji](furigana) so I can read it.",
   "vocabulary": [
     { "word": "word in kanji/kana", "reading": "kana reading", "meaning": "english meaning" }
@@ -176,12 +177,18 @@ ${transData.text}`;
     
     let content = `# Japanese Transcript\n\n## Original Text\n${transcript}\n\n`;
     if (analysis) {
+      if (analysis.summary_ja) {
+        content += `## Summary (Japanese)\n${analysis.summary_ja}\n\n`;
+      }
       content += `## English Translation\n${analysis.translation}\n\n`;
       content += `## Reading\n${analysis.furigana_text}\n\n`;
-      content += `## Vocabulary\n`;
+      content += `## Vocabulary\n\n`;
+      content += `| Word | Reading | Meaning |\n`;
+      content += `| --- | --- | --- |\n`;
       analysis.vocabulary.forEach((v: any) => {
-        content += `- **${v.word}** (${v.reading}): ${v.meaning}\n`;
+        content += `| ${v.word} | ${v.reading} | ${v.meaning} |\n`;
       });
+      content += `\n`;
     }
 
     const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
@@ -257,18 +264,21 @@ ${transData.text}`;
         )}
       </div>
 
-      {status && (
-        <div className="flex items-center justify-center gap-3 text-[12px] text-[var(--text-secondary)] mb-8 uppercase tracking-widest">
-          <svg className="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" fill="none" />
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-          </svg>
-          {status}
+      {/* Loading Animation (Moving Wheel) */}
+      {isLoading && (
+        <div className="flex flex-col items-center justify-center gap-4 mb-8 mt-4">
+          <div className="relative w-12 h-12">
+            <div className="absolute top-0 left-0 w-full h-full border-4 border-[var(--divider)] rounded-full"></div>
+            <div className="absolute top-0 left-0 w-full h-full border-4 border-[var(--text-primary)] border-t-transparent rounded-full animate-spin"></div>
+          </div>
+          <div className="text-[12px] text-[var(--text-secondary)] uppercase tracking-widest">
+            {status}
+          </div>
         </div>
       )}
 
       {/* Content Area */}
-      {transcript && (
+      {transcript && !isLoading && (
         <div className="w-full flex flex-col gap-12 mt-8 text-left">
           
           <section className="flex flex-col items-center">
@@ -280,6 +290,18 @@ ${transData.text}`;
 
           {analysis && (
             <>
+              <hr className="w-16 mx-auto border-t-2" />
+
+              {/* Japanese Summary Section */}
+              {analysis.summary_ja && (
+                <section className="flex flex-col items-center">
+                  <h2 className="text-[12px] text-[var(--text-secondary)] uppercase tracking-widest mb-4">Summary (JP)</h2>
+                  <p className="text-[15px] text-[var(--text-primary)] leading-loose max-w-2xl text-center">
+                    {analysis.summary_ja}
+                  </p>
+                </section>
+              )}
+
               <hr className="w-16 mx-auto border-t-2" />
 
               <section className="flex flex-col items-center">
