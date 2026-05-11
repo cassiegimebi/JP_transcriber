@@ -253,7 +253,7 @@ ${transData.text}`;
       <hr className="w-32 mx-auto" />
 
       {/* Toolbar / Actions */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 mt-4 w-full">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8 mt-4 w-full">
         <button 
           onClick={isRecording ? stopRecording : startRecording}
           disabled={isLoading || !isKeySaved}
@@ -274,29 +274,16 @@ ${transData.text}`;
         )}
       </div>
 
-      {/* Status Message (Only show if error or not loading) */}
-      {status && !isLoading && (
+      {/* Status Message (Simple Text, No Wheel) */}
+      {status && (
         <div className={`flex items-center justify-center gap-3 text-[12px] mb-8 uppercase tracking-widest ${status.startsWith('Error') ? 'text-red-500 max-w-2xl text-center normal-case' : 'text-[var(--text-secondary)]'}`}>
           {status}
         </div>
       )}
 
-      {/* Loading Animation (Moving Wheel) */}
-      {isLoading && (
-        <div className="flex flex-col items-center justify-center gap-6 mb-12 mt-4 py-10 w-full border border-[var(--divider)] bg-[var(--input-bg)] rounded-xl">
-          <div className="relative w-16 h-16">
-            <div className="absolute top-0 left-0 w-full h-full border-4 border-[var(--divider)] rounded-full"></div>
-            <div className="absolute top-0 left-0 w-full h-full border-4 border-[var(--text-primary)] border-t-transparent rounded-full animate-spin"></div>
-          </div>
-          <div className="text-[12px] text-[var(--text-secondary)] uppercase tracking-widest font-bold">
-            {status}
-          </div>
-        </div>
-      )}
-
-      {/* Content Area */}
+      {/* Content Area (Nicely inserted in a rounded corner box) */}
       {transcript && !isLoading && (
-        <div className="w-full flex flex-col gap-12 mt-8 text-left">
+        <div className="w-full bg-[var(--input-bg)] border border-[var(--divider)] rounded-2xl p-6 sm:p-10 flex flex-col gap-10 mt-8 text-left">
           
           <section className="flex flex-col items-center">
             <h2 className="text-[12px] text-[var(--text-secondary)] uppercase tracking-widest mb-4">Transcript</h2>
@@ -323,7 +310,7 @@ ${transData.text}`;
 
               <section className="flex flex-col items-center">
                 <h2 className="text-[12px] text-[var(--text-secondary)] uppercase tracking-widest mb-6">Translation</h2>
-                <div className="bg-[var(--input-bg)] p-6 w-full max-w-2xl mb-6 text-center border border-[var(--divider)] rounded-xl">
+                <div className="bg-[var(--bg-color)] p-6 w-full max-w-2xl mb-6 text-center border border-[var(--divider)] rounded-xl">
                   <div className="leading-[2.5]">
                     {renderFurigana(analysis.furigana_text)}
                   </div>
@@ -342,7 +329,7 @@ ${transData.text}`;
                     <div key={i} className="flex flex-col sm:flex-row items-center py-4 border-b border-[var(--divider)] last:border-b-0 text-center sm:text-left gap-2 sm:gap-6">
                       <div className="sm:w-[40%] flex flex-col sm:flex-row items-center sm:justify-end gap-2 shrink-0">
                         <span className="font-bold text-[16px]">{vocab.word}</span>
-                        <span className="text-[10px] text-[var(--text-secondary)] px-2 py-0.5 border border-[var(--divider)] bg-[var(--input-bg)] rounded-md">{vocab.reading}</span>
+                        <span className="text-[10px] text-[var(--text-secondary)] px-2 py-0.5 border border-[var(--divider)] bg-[var(--bg-color)] rounded-md">{vocab.reading}</span>
                       </div>
                       <div className="sm:w-[60%] text-[var(--text-secondary)]">
                         {vocab.meaning}
