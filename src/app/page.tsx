@@ -99,7 +99,10 @@ export default function Home() {
         body: formData,
       });
 
-      if (!transRes.ok) throw new Error('Transcription failed. Check your API Key.');
+      if (!transRes.ok) {
+        const errText = await transRes.text();
+        throw new Error(`Transcription failed (${transRes.status}): ${errText}`);
+      }
       const transData = await transRes.json();
       setTranscript(transData.text);
       
@@ -135,7 +138,10 @@ ${transData.text}`;
         }),
       });
 
-      if (!analyzeRes.ok) throw new Error('Analysis failed.');
+      if (!analyzeRes.ok) {
+        const errText = await analyzeRes.text();
+        throw new Error(`Analysis failed (${analyzeRes.status}): ${errText}`);
+      }
       const analyzeData = await analyzeRes.json();
       const resultText = analyzeData.choices[0].message.content.trim();
       
@@ -143,15 +149,19 @@ ${transData.text}`;
       try {
         parsedResult = JSON.parse(resultText);
       } catch (e) {
-        const cleaned = resultText.replace(/```json/g, '').replace(/```/g, '').trim();
-        parsedResult = JSON.parse(cleaned);
+        try {
+          const cleaned = resultText.replace(/```json/g, '').replace(/```/g, '').trim();
+          parsedResult = JSON.parse(cleaned);
+        } catch (parseError: any) {
+          throw new Error(`Failed to parse AI response as JSON: ${parseError.message}. Response was: ${resultText.slice(0, 100)}...`);
+        }
       }
 
       setAnalysis(parsedResult);
       setStatus('');
     } catch (error: any) {
       setStatus(`Error: ${error.message}`);
-      alert(error.message);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -264,15 +274,22 @@ ${transData.text}`;
         )}
       </div>
 
+      {/* Status & Error Message */}
+      {status && (
+        <div className={`flex items-center justify-center gap-3 text-[12px] mb-8 uppercase tracking-widest ${status.startsWith('Error') ? 'text-red-500' : 'text-[var(--text-secondary)]'}`}>
+          {status}
+        </div>
+      )}
+
       {/* Loading Animation (Moving Wheel) */}
       {isLoading && (
-        <div className="flex flex-col items-center justify-center gap-4 mb-8 mt-4">
-          <div className="relative w-12 h-12">
+        <div className="flex flex-col items-center justify-center gap-6 mb-12 mt-4 py-8 w-full border border-dashed border-[var(--divider)] rounded-xl">
+          <div className="relative w-16 h-16">
             <div className="absolute top-0 left-0 w-full h-full border-4 border-[var(--divider)] rounded-full"></div>
             <div className="absolute top-0 left-0 w-full h-full border-4 border-[var(--text-primary)] border-t-transparent rounded-full animate-spin"></div>
           </div>
-          <div className="text-[12px] text-[var(--text-secondary)] uppercase tracking-widest">
-            {status}
+          <div className="text-[12px] text-[var(--text-secondary)] uppercase tracking-widest font-bold">
+            Processing...
           </div>
         </div>
       )}
