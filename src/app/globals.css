@@ -56,7 +56,7 @@ h1, h2, h3 {
 .notion-input {
   background: transparent;
   border: none;
-  font-family: inherit;
+  font-family: 'Comfortaa', cursive, sans-serif;
   font-size: 14px;
   color: var(--text-primary);
   padding: 8px 0;
@@ -92,6 +92,7 @@ h1, h2, h3 {
   border: 1px solid var(--divider);
   border-radius: 12px; /* Softer round corners */
   color: var(--text-primary);
+  font-family: 'Comfortaa', cursive, sans-serif;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
